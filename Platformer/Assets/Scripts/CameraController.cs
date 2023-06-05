@@ -6,6 +6,7 @@ public class CameraController : MonoBehaviour
     public float Yaxis;
     public float Xaxis;
     public float RotationSensitivity = 8.0f;
+    public bool IsInverted;
 
     private float RotationMin = -40.0f;
     private float RotationMax = 80.0f;
@@ -24,7 +25,14 @@ public class CameraController : MonoBehaviour
 
         Xaxis = Mathf.Clamp(Xaxis, RotationMin, RotationMax);
 
-        TargetRotation = Vector3.SmoothDamp(TargetRotation, new Vector3(Xaxis, Yaxis),ref CurrentVel, SmoothTime);
+        if(!IsInverted)
+        {
+            TargetRotation = Vector3.SmoothDamp(TargetRotation, new Vector3(Xaxis, Yaxis),ref CurrentVel, SmoothTime);
+        }
+        else
+        {
+            TargetRotation = Vector3.SmoothDamp(TargetRotation, new Vector3(Xaxis, -Yaxis),ref CurrentVel, SmoothTime);
+        }
         transform.eulerAngles = TargetRotation;
 
         transform.position = Target.position - transform.forward * 6.25f;
