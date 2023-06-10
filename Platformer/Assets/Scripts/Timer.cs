@@ -8,6 +8,8 @@ public class Timer : MonoBehaviour
     public Text TimerText;
     private float StartTime;
 
+    public Text finalTimeText;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,5 +24,14 @@ public class Timer : MonoBehaviour
         string min = ((int) t  / 60).ToString();
         string sec = (t % 60).ToString("00.00");
         TimerText.text = min + ":" + sec;
+
+        if (Time.timeScale == 0)
+            Win();
+    }
+
+    // Finish Time
+    public void Win()
+    {
+        finalTimeText.text = TimerText.text;
     }
 }
